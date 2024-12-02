@@ -9,5 +9,8 @@ use App\Models\Test;
 use Illuminate\Support\Facades\Hash;
 class TransactionsController extends Controller
 {
-
+    public function getTest(){
+        $test = Test::first();
+        return view('login',['test' => $test]);
+    }
 }

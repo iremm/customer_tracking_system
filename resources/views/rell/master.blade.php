@@ -15,7 +15,7 @@
 </head>
 <body>
     <!-- Header -->
-    @include('partials.header')
+    @include('rell.layout.src.header')
 
     <!-- Content -->
     <div class="container my-5">
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Footer -->
-    @include('partials.footer')
+    @include('rell.layout.src.footer')
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
