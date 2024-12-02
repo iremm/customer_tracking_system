@@ -16,7 +16,7 @@
 <body>
     <!-- Header -->
     @include('rell.layout.src.header')
-
+    
     <!-- Content -->
     <div class="container my-5">
         @yield('content')
