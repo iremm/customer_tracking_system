@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notifiable;
 
 class Role extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
 
    public function users(){
