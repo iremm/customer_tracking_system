@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Customers;
-use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class PagesController extends controller
 {
@@ -94,18 +94,42 @@ class PagesController extends controller
 
   
 
-    public function view_excel(Request $request)
+    public function upload_excel(Request $request)
     {
         $request->validate([
             'excelFile' => 'required|file|mimes:xlsx,xls',
         ]);
-    
+        
         $file = $request->file('excelFile');
-    
-        $data = Excel::toArray([], $file);
-    
-        dd($data); 
+        
+        try {
+            $spreadsheet = IOFactory::load($file);
+            
+            // İlk sayfayı al
+            $sheet = $spreadsheet->getActiveSheet();
+            
+            $data = [];
+            foreach ($sheet->getRowIterator() as $row) {
+                $rowData = [];
+                foreach ($row->getCellIterator() as $cell) {
+                    $rowData[] = $cell->getValue();
+                }
+                $data[] = $rowData;
+            }
+            
+            dd($data);
+            
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Excel dosyasındaki içerik başarıyla alındı.',
+            ]);
+            
+        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Dosya okunurken bir hata oluştu: ' . $e->getMessage(),
+            ]);
+        }
     }
     
-
 }
