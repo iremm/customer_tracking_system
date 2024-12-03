@@ -28,6 +28,13 @@ class UserController extends controller
                 ]);
             }
         }
+        else{
+            return response()->json([
+                'status' => 'fail',
+                'role' => 1,
+                'message' => "Failed"
+            ]);
+        }
        
     }
 

@@ -46,12 +46,20 @@ document.getElementById('login-form-admin').addEventListener('submit', function(
             url: "admin/login-form",
             data: userData,
             success: function(response) {
-                Swal.fire({
-                    title: 'Giriş Onaylandı',
-                    icon: 'success'
-                }).then(function() {
-                    window.location.href = '/admin/homepage';
-                });
+                if(response.status == 'success' && response.role === 1){
+                    Swal.fire({
+                        title: 'Login Success',
+                        icon: 'success'
+                    }).then(function() {
+                        window.location.href = '/admin/mainpage';
+                    });
+                }
+                else{
+                    Swal.fire({
+                        title: 'Login error',
+                        icon: 'error'
+                    });
+                }
             },
             error: function(error) {
                 var errorMessage = error.responseJSON.message || 'Giriş Başarısız';
@@ -89,10 +97,20 @@ document.getElementById('login-form-customer').addEventListener('submit', functi
         }
     })
     .done(function(response) {
-            Swal.fire({
-                icon: 'sucsess',
-                title: 'sucsess'
-            });
+        if(response.status == 'success' && response.role === 2){
+                    Swal.fire({
+                        title: 'Login Success',
+                        icon: 'success'
+                    }).then(function() {
+                        window.location.href = '/customer/mainpage';
+                    });
+                }
+                else{
+                    Swal.fire({
+                        title: 'Login error',
+                        icon: 'error'
+                    });
+                }
     })
 });
 
