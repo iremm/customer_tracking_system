@@ -10,8 +10,10 @@ class PagesController extends controller
 {
     //admin-page
     public function admin_home(){
+    
+    $admin = Customers::all();
 
-      return view('homepage-admin');
+      return view('homepage-admin',['admin' => $admin]);
     }
     //customer-page
     public function customer_home(){
