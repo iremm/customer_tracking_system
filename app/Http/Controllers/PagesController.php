@@ -92,44 +92,73 @@ class PagesController extends controller
     //add excel
   
 
-  
+ 
 
     public function upload_excel(Request $request)
     {
         $request->validate([
-            'excelFile' => 'required|file|mimes:xlsx,xls',
+            'excelFile' => 'required|file|mimes:xlsx',
         ]);
         
         $file = $request->file('excelFile');
+        $path = $file->getRealPath();
         
-        try {
-            $spreadsheet = IOFactory::load($file);
-            
-            // İlk sayfayı al
-            $sheet = $spreadsheet->getActiveSheet();
-            
-            $data = [];
-            foreach ($sheet->getRowIterator() as $row) {
-                $rowData = [];
-                foreach ($row->getCellIterator() as $cell) {
-                    $rowData[] = $cell->getValue();
+        // Zip dosyasını açma
+        $zip = new \ZipArchive;
+        if ($zip->open($path) === TRUE) {
+            $xmlContent = '';
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $fileName = $zip->getNameIndex($i);
+                if (strpos($fileName, 'sheet') !== false) {
+                    $xmlContent = $zip->getFromName($fileName);
+                    break;
                 }
-                $data[] = $rowData;
             }
             
-            dd($data);
-            
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Excel dosyasındaki içerik başarıyla alındı.',
-            ]);
-            
-        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+            if ($xmlContent) {
+                $xml = simplexml_load_string($xmlContent);
+                $namespaces = $xml->getNamespaces(true);
+    
+                $rows = [];
+                foreach ($xml->sheetData->row as $row) {
+                    $rowData = [];
+                    foreach ($row->c as $cell) {
+                        $cellValue = (string) $cell->v;
+                        $rowData[] = $cellValue;
+                    }
+                    $rows[] = $rowData;
+                }
+    
+                foreach ($rows as $row) {
+                    $customer = new Customers();
+                    $customer->name = $row[0];
+                    $customer->surname = $row[1];
+                    $customer->email = $row[2];
+                    $customer->phone = $row[3];
+                    $customer->company_name = $row[4];
+                    $customer->save();
+
+                    
+
+                }
+    
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Excel dosyasındaki içerik başarıyla kaydedildi.',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Excel dosyasındaki veri alınamadı.',
+                ]);
+            }
+        } else {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Dosya okunurken bir hata oluştu: ' . $e->getMessage(),
+                'message' => 'Excel dosyası açılamadı.',
             ]);
         }
     }
+    
     
 }

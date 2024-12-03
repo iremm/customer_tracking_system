@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PagesController;
+use App\Http\Middleware\CheckLogin;
 Route::get('/', function () {
     return view('login');
 });
@@ -13,8 +14,8 @@ Route::controller(UserController::class)->group(function(){
 });
 
 Route::controller(PagesController::class)->group(function(){
-    Route::get('customer/mainpage','customer_home');
-    Route::get('admin/mainpage','admin_home');
+    Route::get('customer/mainpage', 'customer_home');
+    Route::get('admin/mainpage', 'admin_home');
     Route::post('save-changes','save_customer');
     Route::post('/delete-customer','delete_customer');
     Route::post('/add-user','add_customer');
