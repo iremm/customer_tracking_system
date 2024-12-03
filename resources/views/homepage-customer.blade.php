@@ -2,5 +2,5 @@
 
 @section('content')
 
-dfds
+fdgd
 @endsection
