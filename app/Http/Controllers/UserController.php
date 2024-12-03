@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
 use App\Models\User;
 
 class UserController extends controller
@@ -8,10 +10,10 @@ class UserController extends controller
 
     public function login(Request $request){
         if($request->role == 1){
-           console.log('admin');
+            dd("1");
         }
         else{
-            console.log('user');
+            dd("2");
         }
     }
 

@@ -43,12 +43,11 @@ document.getElementById('login-form-admin').addEventListener('submit', function(
 
         $.ajax({
             type: "POST",
-            url: "/login-form",
+            url: "admin/login-form",
             data: userData,
             success: function(response) {
                 Swal.fire({
                     title: 'Giriş Onaylandı',
-                    text: response.message,
                     icon: 'success'
                 }).then(function() {
                     window.location.href = '/admin/homepage';
@@ -83,45 +82,18 @@ document.getElementById('login-form-customer').addEventListener('submit', functi
 
     $.ajax({
         type: "POST",
-        url: "/login-form",
+        url: "customer/login-form",
         data: userData,
         headers: {
             'X-CSRF-TOKEN': csrfToken
         }
     })
     .done(function(response) {
-        if (response.status) {
             Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Yeni kullanıcı oluşturdu admin onayı bekleyiniz.'
+                icon: 'sucsess',
+                title: 'sucsess'
             });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Kullanıcı oluşturulamadı. Admin ile iletişime geçiniz.',
-                footer: 'Please check the form and try again.'
-            });
-        }
     })
-    .fail(function(error) {
-        var errorMessage = 'Something went wrong. Please try again later.';
-        if (error.responseJSON && error.responseJSON.errors) {
-            errorMessage = '';
-            $.each(error.responseJSON.errors, function(key, value) {
-                errorMessage += value[0] + '<br>';
-            });
-        } else if (error.responseJSON && error.responseJSON.message) {
-            errorMessage = error.responseJSON.message;
-        }
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            html: errorMessage,
-            footer: 'Please check the form and try again.'
-        });
-    });
 });
 
 </script>
