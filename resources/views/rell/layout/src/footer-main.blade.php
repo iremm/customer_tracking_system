@@ -197,5 +197,65 @@ $(document).ready(function () {
     });
 });
 
+//save excel script
+$(document).ready(function () {
+    $('#saveExcel').on('click', function () {
+        Swal.fire({
+            title: 'Excel Dosyası Yükle',
+            html: `
+                <form id="excelUploadForm">
+                    <div class="form-group">
+                        <label for="excelFile">Excel Dosyası:</label>
+                        <input type="file" id="excelFile" name="excelFile" class="form-control" accept=".xls,.xlsx">
+                    </div>
+                </form>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Yükle',
+            cancelButtonText: 'İptal',
+            preConfirm: () => {
+                const fileInput = document.getElementById('excelFile');
+                const file = fileInput.files[0];
+                
+                if (!file) {
+                    Swal.showValidationMessage('Lütfen bir dosya seçin.');
+                    return false;
+                }
+                
+                const validExtensions = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+                if (!validExtensions.includes(file.type)) {
+                    Swal.showValidationMessage('Lütfen sadece Excel formatında bir dosya yükleyin (.xls, .xlsx).');
+                    return false;
+                }
+
+                return file;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const formData = new FormData();
+                formData.append('excelFile', result.value);
+                formData.append('_token', "{{ csrf_token() }}");
+
+                $.ajax({
+                    url: '/upload-excel',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            Swal.fire('Başarılı!', response.message, 'success');
+                        } else {
+                            Swal.fire('Hata!', response.message, 'error');
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire('Hata!', 'Bir hata oluştu.', 'error');
+                    }
+                });
+            }
+        });
+    });
+});
 
 </script>

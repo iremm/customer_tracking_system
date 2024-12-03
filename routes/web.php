@@ -18,4 +18,6 @@ Route::controller(PagesController::class)->group(function(){
     Route::post('save-changes','save_customer');
     Route::post('/delete-customer','delete_customer');
     Route::post('/add-user','add_customer');
+    Route::post('/upload-excel','upload_excel');
+    
 });

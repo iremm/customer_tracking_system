@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Customers;
+use Maatwebsite\Excel\Facades\Excel;
+
 class PagesController extends controller
 {
     //admin-page
@@ -85,6 +87,25 @@ class PagesController extends controller
             'message' => 'Kullanıcı başarıyla eklendi.',
             'data' => $customer
         ]);
-}
+    }
+
+    //add excel
+  
+
+  
+
+    public function view_excel(Request $request)
+    {
+        $request->validate([
+            'excelFile' => 'required|file|mimes:xlsx,xls',
+        ]);
+    
+        $file = $request->file('excelFile');
+    
+        $data = Excel::toArray([], $file);
+    
+        dd($data); 
+    }
+    
 
 }
