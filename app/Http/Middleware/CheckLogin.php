@@ -1,17 +1,20 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckLogin
+class CheckRole
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $role)
     {
         if (!Auth::check()) {
-            return redirect('login');
+            return redirect('login'); 
+        }
+
+        if (Auth::user()->role != $role) {
+            return redirect('login'); 
         }
 
         return $next($request);
