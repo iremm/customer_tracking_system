@@ -4,7 +4,6 @@
 <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>İsim</th>
                         <th>Soyisim</th>
                         <th>Email</th>
@@ -13,5 +12,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($customers as $customer)
+                @endforeach
 </tbody>
 @endsection
