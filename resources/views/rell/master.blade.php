@@ -7,7 +7,6 @@
         <div id="particles-js"></div>
         <!--Page content-->
         @yield('content')
-        <!--Footer include-->
         @include('rell.layout.src.footer')
     </body>
 </html>

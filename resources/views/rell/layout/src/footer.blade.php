@@ -109,4 +109,8 @@ document.getElementById('login-form-customer').addEventListener('submit', functi
     })
 });
 
+$(document).ready(function() {
+    $('#customersTable').DataTable(); 
+    
+});
 </script>

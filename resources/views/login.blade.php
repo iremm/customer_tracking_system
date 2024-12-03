@@ -1,6 +1,7 @@
 @extends('rell.master')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/login.css') }}">
 <div class="container" id="container">
     <!---Cusomer Login Form--->
     <div class="form-container sign-up-container">
