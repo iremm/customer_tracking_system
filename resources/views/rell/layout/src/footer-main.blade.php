@@ -121,5 +121,81 @@ $(document).ready(function() {
 });
 
 
+$(document).ready(function () {
+    const table = $('#adminsTable').DataTable();
+
+    $('#newUser').on('click', function () {
+        Swal.fire({
+            title: 'Yeni Kullanıcı Ekle',
+            html: `
+                <form id="newUserForm">
+                    <div class="form-group">
+                        <label for="name">İsim</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="İsim">
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">Soyisim</label>
+                        <input type="text" id="surname" name="surname" class="form-control" placeholder="Soyisim">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefon</label>
+                        <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefon">
+                    </div>
+                    <div class="form-group">
+                        <label for="company_name">Şirket Adı</label>
+                        <input type="text" id="company_name" name="company_name" class="form-control" placeholder="Şirket Adı">
+                    </div>
+                </form>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Ekle',
+            cancelButtonText: 'İptal',
+            preConfirm: () => {
+                return {
+                    name: $('#name').val(),
+                    surname: $('#surname').val(),
+                    email: $('#email').val(),
+                    phone: $('#phone').val(),
+                    company_name: $('#company_name').val()
+                };
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/add-user',
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}", 
+                        ...result.value 
+                    },
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            Swal.fire('Başarılı!', response.message, 'success');
+
+                            table.row.add([
+                                result.value.name,
+                                result.value.surname,
+                                result.value.email,
+                                result.value.phone,
+                                result.value.company_name,
+                                new Date().toLocaleString()
+                            ]).draw(false);
+                        } else {
+                            Swal.fire('Başarısız!', response.message, 'error');
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire('Hata!', 'Bir hata oluştu.', 'error');
+                    }
+                });
+            }
+        });
+    });
+});
+
 
 </script>
