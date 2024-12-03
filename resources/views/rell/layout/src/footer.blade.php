@@ -1,6 +1,6 @@
 <footer class="footer">
     <div class="icons">
-        <!-- Add your social icons or other footer content here -->
+        
     </div>
     <p>&copy; 2024 Your Customer Tracking System.</p>
 </footer>
