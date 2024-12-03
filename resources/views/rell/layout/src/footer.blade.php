@@ -43,7 +43,7 @@ document.getElementById('login-form-admin').addEventListener('submit', function(
 
         $.ajax({
             type: "POST",
-            url: "/login-admin",
+            url: "/login-form",
             data: userData,
             success: function(response) {
                 Swal.fire({
@@ -83,7 +83,7 @@ document.getElementById('login-form-customer').addEventListener('submit', functi
 
     $.ajax({
         type: "POST",
-        url: "/login-customer",
+        url: "/login-form",
         data: userData,
         headers: {
             'X-CSRF-TOKEN': csrfToken

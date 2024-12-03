@@ -8,10 +8,10 @@ class UserController extends controller
 
     public function login(Request $request){
         if($request->role == 1){
-           
+           console.log('admin');
         }
         else{
-            
+            console.log('user');
         }
     }
 
