@@ -49,15 +49,75 @@ $(document).ready(function() {
                 changes: updatedData
             },
             success: function(response) {
-                $('#saveChangesBtn').hide(); 
-
-               
-            },
+                        if (response.status === 'success') {
+                            Swal.fire(
+                                'Customer changed',
+                                response.message,
+                                'success'
+                            );
+                            row.remove(); 
+                        } else {
+                            Swal.fire(
+                                'Customer change error',
+                                response.message,
+                                'error'
+                            );
+                        }
+                    },
         });
     }
     updatedData = [];
 });
 
+});
+$(document).ready(function() {
+    $('#adminsTable').on('click', '.delete-btn', function() {
+        var row = $(this).closest('tr');
+        var id = row.data('id');
+
+        Swal.fire({
+            title: 'Silmek istediğinizden emin misiniz?',
+            text: "Bu işlem geri alınamaz!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, sil!',
+            cancelButtonText: 'Hayır, iptal et',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/delete-customer',
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}", 
+                        id: id 
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire(
+                                'Silindi!',
+                                response.message,
+                                'success'
+                            );
+                            row.remove(); 
+                        } else {
+                            Swal.fire(
+                                'Başarısız!',
+                                response.message,
+                                'error'
+                            );
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire(
+                            'Hata!',
+                            'Bir hata oluştu, kaydınız silinemedi.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    });
 });
 
 

@@ -9,9 +9,9 @@
 <div class="container p-5">
     <div class="row">
         <div class="col-12">
-            <button id="saveExcel" class="btn btn-success mt-3">Excel ekle</button>
-            <button id="saveChangesBtn" class="btn btn-success mt-3" style="display:none;">Değişiklikleri Kaydet</button>
-       
+            <button id="saveExcel" class="btn btn-success mt-3">Excel add</button>
+            <button id="newUser" class="btn btn-success mt-3">New User Add</button>
+            <button id="saveChangesBtn" class="btn btn-success mt-3" style="display:none;">Save Changes</button>
         </div>
     </div>
     <div class="row"> 

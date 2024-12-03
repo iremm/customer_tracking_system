@@ -35,6 +35,32 @@ class PagesController extends controller
               }
           }
   
-          return response()->json(['message' => 'Değişiklikler başarıyla kaydedildi!']);
+          return response()->json([
+            'status' => 'success',
+            'message' => "Customers changed"
+        ]);
     }
+
+    //delete customer
+    public function delete_customer(Request $request){
+        $customer = Customers::find($request->id)->first();
+
+      
+            if ($customer) {
+                
+                $customer->delete();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => "Customer Deleted"
+                ]);
+            }
+            else{
+                return response()->json([
+                    'status' => 'error',
+                    'message' => "Customer Deleted Failed"
+                ]);
+            }
+
+  }
+    //add customer
 }
