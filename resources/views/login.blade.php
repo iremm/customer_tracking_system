@@ -1,4 +1,4 @@
-@extends('rell.master')
+@extends('rell.master-login')
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/login.css') }}">

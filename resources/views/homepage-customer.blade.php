@@ -1,8 +1,9 @@
-@extends('rell.master')
+@extends('rell.master-main')
 
 @section('content')
-<div class="container">
-    <table class="table table-striped">
+
+<div class="container p-5">
+    <table id="customersTable" class="table table-striped">
         <thead>
             <tr>
             <th scope="col">İsim</th>
@@ -28,3 +29,19 @@
     </table>
 </div>
 @endsection
+
+@push('scripts')
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/datatables.net-bs4@1.13.6/css/dataTables.bootstrap4.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.jsdelivr.net/npm/datatables.net@1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables.net-bs4@1.13.6/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // DataTable başlatma
+            $('#customersTable').DataTable();
+        });
+    </script>
+@endpush
