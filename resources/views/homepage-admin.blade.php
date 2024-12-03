@@ -21,9 +21,10 @@
                     <tr>
                         <th scope="col">İsim</th>
                         <th scope="col">Soyisim</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Telefon</th>
+                        <th scope="col">Firma Adı</th>
+                        <th scope="col">İşlemler</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,9 @@
                         <td class="editable" data-field="email">{{ $customer->email }}</td>
                         <td class="editable" data-field="phone">{{ $customer->phone }}</td>
                         <td class="editable" data-field="company_name">{{ $customer->company_name }}</td>
+                        <td>
+                            <button class="btn btn-danger delete-btn">Sil</button>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
