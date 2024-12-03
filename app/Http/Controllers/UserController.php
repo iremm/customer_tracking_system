@@ -12,8 +12,8 @@ class UserController extends controller
     public function login(Request $request){
 
         $user = User::where('email',$request->email)->first();
-        if($user && Hash::check('password',$user->password)){
-            if($user->role == 1){
+        if($user && Hash::check($request->password,$user->password)){
+            if($request->role == 1){
                 return response()->json([
                     'status' => 'success',
                     'role' => 1,
@@ -29,11 +29,11 @@ class UserController extends controller
             }
         }
         else{
-            return response()->json([
-                'status' => 'fail',
-                'role' => 1,
-                'message' => "Failed"
-            ]);
+                return response()->json([
+                    'status' => 'error',
+                    'role' => 2,
+                    'message' => "Success Login"
+                ]);
         }
        
     }

@@ -13,6 +13,6 @@ Route::controller(UserController::class)->group(function(){
 });
 
 Route::controller(PagesController::class)->group(function(){
-    Route::post('customer/mainpage','customer_home');
-    Route::post('admin/mainpage','admin_home');
+    Route::get('customer/mainpage','customer_home');
+    Route::get('admin/mainpage','admin_home');
 });

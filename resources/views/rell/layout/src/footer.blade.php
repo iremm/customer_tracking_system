@@ -47,12 +47,7 @@ document.getElementById('login-form-admin').addEventListener('submit', function(
             data: userData,
             success: function(response) {
                 if(response.status == 'success' && response.role === 1){
-                    Swal.fire({
-                        title: 'Login Success',
-                        icon: 'success'
-                    }).then(function() {
                         window.location.href = '/admin/mainpage';
-                    });
                 }
                 else{
                     Swal.fire({
