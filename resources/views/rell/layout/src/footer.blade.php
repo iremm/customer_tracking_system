@@ -37,6 +37,7 @@ document.getElementById('login-form-admin').addEventListener('submit', function(
         var userData = {
             email: $('#email_login_admin').val(),
             password: $('#password_login_admin').val(),
+            role: 1,
             _token: $('meta[name="csrf-token"]').attr('content')
         };
 
@@ -74,6 +75,7 @@ document.getElementById('login-form-customer').addEventListener('submit', functi
     var userData = {
         email: $('#email_login_customer').val(),
         password: $('#password_login_customer').val(),
+        role: 2,
         _token: "{{ csrf_token() }}"
     };
 
