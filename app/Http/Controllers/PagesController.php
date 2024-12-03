@@ -47,7 +47,7 @@ class PagesController extends controller
 
       
             if ($customer) {
-                
+
                 $customer->delete();
                 return response()->json([
                     'status' => 'success',
@@ -63,4 +63,28 @@ class PagesController extends controller
 
   }
     //add customer
+    public function add_customer(Request $request)
+{
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'surname' => 'required|string|max:255',
+        'email' => 'required|email|unique:customers,email',
+        'phone' => 'required|string|max:20',
+        'company_name' => 'required|string|max:255',
+    ]);
+
+        $customer = new Customers();
+        $customer->name = $validatedData['name'];
+        $customer->surname = $validatedData['surname'];
+        $customer->email = $validatedData['email'];
+        $customer->phone = $validatedData['phone'];
+        $customer->company_name = $validatedData['company_name'];
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Kullanıcı başarıyla eklendi.',
+            'data' => $customer
+        ]);
+}
+
 }
