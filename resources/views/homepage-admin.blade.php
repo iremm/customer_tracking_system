@@ -1,4 +1,4 @@
-@extends('rell.master')
+@extends('rell.master-main')
 
 @section('content')
 
