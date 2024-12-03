@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-
-class UserController extends controller
+use App\Models\Customers;
+class PagesController extends controller
 {
     //admin-page
     public function admin_home(){
@@ -15,7 +15,9 @@ class UserController extends controller
     }
     //customer-page
     public function customer_home(){
-
-        return view('homepage-customer');
+        
+        $customers = Customers::all();
+        
+        return view('homepage-customer',['customers' => $customers]);
       }
 }

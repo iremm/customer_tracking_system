@@ -85,7 +85,7 @@ document.getElementById('login-form-customer').addEventListener('submit', functi
 
     $.ajax({
         type: "POST",
-        url: "customer/login-form",
+        url: "user/login-form",
         data: userData,
         headers: {
             'X-CSRF-TOKEN': csrfToken
