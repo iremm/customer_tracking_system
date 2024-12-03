@@ -1,17 +1,7 @@
-<footer class="footer">
-    <div class="icons">
-        <!-- Add your social icons or other footer content here -->
-    </div>
-    <p>&copy; 2024 Your Customer Tracking System.</p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
-<script>
 
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
-const container = document.getElementById('container');
+const container = document.getElementById('main_container');
 
 signUpButton.addEventListener('click', () =>
 container.classList.add('right-panel-active'));
@@ -29,7 +19,9 @@ function show() {
   }
 }
 
+// Form submit olduğunda çağrılacak fonksiyon
 function submitForm() {
+    // Form verilerini al
     var userData = {
         name: $('#name').val(),
         surname: $('#surname').val(),
@@ -39,25 +31,28 @@ function submitForm() {
     };
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
-        type: "POST",
-        url: "/register",
-        data: userData,
+        type: "POST", // Veriyi gönderme yöntemi (POST)
+        url: "/register", // Backend tarafındaki işlemi yapacak URL
+        data: userData, // Gönderilecek veriler
         headers: {
-            'X-CSRF-TOKEN': csrfToken
+            'X-CSRF-TOKEN': csrfToken // CSRF token'ını başlık olarak ekleyin
         }
     })
     .done(function(response) {
+        // Başarılı bir şekilde cevap alındığında ne yapılacağı
         if (response.status == true) {
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
                 text: response.message
             }).then(function() {
+                // Yönlendirme işlemi
                 window.location.href = '/admin/homepage';
             });
         }
     })
     .fail(function(error) {
+        // Hata durumunda ne yapılacağı
         var errorMessage = 'Something went wrong. Please try again later.';
         if (error.responseJSON && error.responseJSON.errors) {
             errorMessage = '';
@@ -74,9 +69,18 @@ function submitForm() {
     });
 }
 
+/* // Sayfa yüklendiğinde CSRF token'ı al ve form submit olduğunda submitForm fonksiyonunu çağır
+$(document).ready(function() {
+    $('form').submit(function(event) {
+        event.preventDefault();
+        submitForm();
+    });
+});
+ */
+
  $(document).ready(function() {
     $('#login-form').on('submit', function(event) {
-        event.preventDefault();
+        event.preventDefault(); // Formun varsayılan submit davranışını engelle
 
         var userData = {
             email: $('#email_login').val(),
@@ -84,20 +88,24 @@ function submitForm() {
             _token: $('meta[name="csrf-token"]').attr('content')
         };
 
+        // AJAX isteği gönder
         $.ajax({
-            type: "POST",
-            url: "/login",
-            data: userData,
+            type: "POST", // Veriyi gönderme yöntemi (POST)
+            url: "/login", // Backend tarafındaki işlemi yapacak URL
+            data: userData, // Gönderilecek veriler
             success: function(response) {
+                // Başarılı giriş yapıldığında Swal kullanarak bildirim göster
                 Swal.fire({
                     title: 'Giriş Onaylandı',
                     text: response.message,
                     icon: 'success'
                 }).then(function() {
+                    // Bildirim kapatıldığında anasayfaya yönlendir
                     window.location.href = '/admin/homepage';
                 });
             },
             error: function(error) {
+                // Giriş hatası olduğunda Swal kullanarak hata bildirimini göster
                 var errorMessage = error.responseJSON.message || 'Giriş Başarısız';
                 Swal.fire({
                     title: 'Giriş Başarısız',
@@ -113,7 +121,7 @@ function submitForm() {
 
 
 document.getElementById('register-form').addEventListener('submit', function(event) {
-    event.preventDefault();
+    event.preventDefault(); // Formun varsayılan gönderim işlemini durdurur
 
     var userData = {
         name: $('#name').val(),
@@ -167,5 +175,3 @@ document.getElementById('register-form').addEventListener('submit', function(eve
         });
     });
 });
-
-</script>

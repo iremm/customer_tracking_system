@@ -1,44 +1,41 @@
-@extends('rell.master') <!-- master.blade.php dosyasını kullanıyoruz -->
+@extends('rell.master')
 
-@section('title', 'DataTables.js Örneği') <!-- Sayfa başlığı -->
+@section('content')
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form id="register-form">
+            @csrf
+            <h1>Customer</h1>
+            <span>Welcome customer. Enter Your Information</span>
+            <input type="email" id="email_login" placeholder="Email" required />
+            <input type="password" id="password_login" placeholder="Password" required />
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
 
-@section('content') <!-- Sayfa içeriği -->
-    <table id="example" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>Ad</th>
-                <th>Pozisyon</th>
-                <th>Ofis</th>
-                <th>Yaş</th>
-                <th>Başlangıç Tarihi</th>
-                <th>Maaş</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-                <td>$170,750</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="form-container sign-in-container">
+        <form id="login-form">
+            <h1>Admin</h1>
+            <span>Welcome admin. Enter Your Information</span>
+            <input type="email" id="email_login" placeholder="Email" required />
+            <input type="password" id="password_login" placeholder="Password" required />
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>Return to admin screen</p>
+                <button class="ghost" id="signIn">Admin Login Screen</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Customer</h1>
+                <p>Continue for customer login</p>
+                <button class="ghost" id="signUp">Customer Login Screen</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
-
-@push('scripts') <!-- Sayfaya özgü JavaScript -->
-<script>
-    $(document).ready(function() {
-        $('#example').DataTable();
-    });
-</script>
-@endpush
