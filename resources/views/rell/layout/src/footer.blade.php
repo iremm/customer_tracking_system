@@ -29,58 +29,14 @@ function show() {
   }
 }
 
-function submitForm() {
-    var userData = {
-        name: $('#name').val(),
-        surname: $('#surname').val(),
-        email: $('#email').val(),
-        password: $('#myInput').val(),
-        _token: "{{ csrf_token() }}"
-    };
-    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-    $.ajax({
-        type: "POST",
-        url: "/register",
-        data: userData,
-        headers: {
-            'X-CSRF-TOKEN': csrfToken
-        }
-    })
-    .done(function(response) {
-        if (response.status == true) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: response.message
-            }).then(function() {
-                window.location.href = '/admin/homepage';
-            });
-        }
-    })
-    .fail(function(error) {
-        var errorMessage = 'Something went wrong. Please try again later.';
-        if (error.responseJSON && error.responseJSON.errors) {
-            errorMessage = '';
-            $.each(error.responseJSON.errors, function(key, value) {
-                errorMessage += value[0] + '<br>';
-            });
-        }
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            html: errorMessage,
-            footer: 'Please check the form and try again.'
-        });
-    });
-}
-
- $(document).ready(function() {
-    $('#login-form').on('submit', function(event) {
+///Admin Login Form submit event
+document.getElementById('login-form-admin').addEventListener('submit', function(event) {
+    event.preventDefault();
         event.preventDefault();
 
         var userData = {
-            email: $('#email_login').val(),
-            password: $('#password_login').val(),
+            email: $('#email_login_admin').val(),
+            password: $('#password_login_admin').val(),
             _token: $('meta[name="csrf-token"]').attr('content')
         };
 
@@ -106,20 +62,18 @@ function submitForm() {
                 });
             }
         });
-    });
+   
 });
 
 
 
-
-document.getElementById('register-form').addEventListener('submit', function(event) {
+///Customer Login Form submit event
+document.getElementById('login-form-customer').addEventListener('submit', function(event) {
     event.preventDefault();
 
     var userData = {
-        name: $('#name').val(),
-        surname: $('#surname').val(),
-        email: $('#email').val(),
-        password: $('#myInput').val(),
+        email: $('#email_login_customer').val(),
+        password: $('#password_login_customer').val(),
         _token: "{{ csrf_token() }}"
     };
 
