@@ -2,12 +2,18 @@
 
 @section('content')
 
-<!-- Başlık Ekleme -->
 <div class="container">
     <h2 class="text-center mb-4">Müşteri Görüntüleme Sistemi</h2>
 </div>
 
 <div class="container p-5">
+    <div class="row">
+        <div class="col-12">
+            <button id="saveExcel" class="btn btn-success mt-3">Excel ekle</button>
+            <button id="saveChangesBtn" class="btn btn-success mt-3" style="display:none;">Değişiklikleri Kaydet</button>
+       
+        </div>
+    </div>
     <div class="row"> 
         <div class="col-12"> 
             <table id="adminsTable" class="table table-striped">
@@ -33,12 +39,8 @@
                 </tbody>
             </table>
 
-            <!-- Kaydet butonu -->
-            <button id="saveChangesBtn" class="btn btn-success mt-3" style="display:none;">Değişiklikleri Kaydet</button>
         </div>
     </div>
 </div>
 
 @endsection
-
-@

@@ -10,7 +10,7 @@
 <div class="container p-5">
     <div class="row"> 
         <div class="col-12"> 
-            <table id="customersTable" class="table table-striped">
+            <table id="adminsTable" class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">İsim</th>
