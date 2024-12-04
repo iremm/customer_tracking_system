@@ -221,9 +221,12 @@ $(document).ready(function () {
                     Swal.showValidationMessage('Lütfen bir dosya seçin.');
                     return false;
                 }
-                
+
+                // Dosya formatı kontrolü
                 const validExtensions = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
-                if (!validExtensions.includes(file.type)) {
+                const validExtensionsRegex = /\.(xls|xlsx)$/i;
+
+                if (!validExtensions.includes(file.type) && !validExtensionsRegex.test(file.name)) {
                     Swal.showValidationMessage('Lütfen sadece Excel formatında bir dosya yükleyin (.xls, .xlsx).');
                     return false;
                 }
@@ -257,5 +260,6 @@ $(document).ready(function () {
         });
     });
 });
+
 
 </script>
