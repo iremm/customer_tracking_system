@@ -14,11 +14,15 @@ Route::controller(UserController::class)->group(function(){
 });
 
 Route::controller(PagesController::class)->group(function(){
-    Route::get('customer/mainpage', 'customer_home')->middleware('checkLogin');
-    Route::get('admin/mainpage', 'admin_home')->middleware('checkLogin');
     Route::post('save-changes','save_customer');
     Route::post('/delete-customer','delete_customer');
     Route::post('/add-user','add_customer');
     Route::post('/upload-excel','upload_excel');
     
 });
+Route::controller(PagesController::class)->middleware([CheckLogin::class.':admin'])->group(function() {
+    Route::get('admin/mainpage', 'admin_home');
+    Route::get('customer/mainpage', 'customer_home');
+});
+
+
